@@ -1,47 +1,45 @@
 #include "sort.h"
 
 /**
- * swap - swaps two integers in an array
- * @a: first number
- * @b: second number
+ * swap_ints - Swap two integers in an array.
+ * @a: The first integer to swap.
+ * @b: The second integer to swap.
  */
-void swap(int *a, int *b)
+void swap_ints(int *a, int *b)
 {
-	int tmp = *a;
+	int tmp;
 
+	tmp = *a;
 	*a = *b;
 	*b = tmp;
 }
 
 /**
- * selection_sort - implementing the selection sort
- * @array: the array to be sorted
- * @size:size of the array
+ * selection_sort - Sort an array of integers in ascending order
+ *                  using the selection sort algorithm.
+ * @array: An array of integers.
+ * @size: The size of the array.
+ *
+ * Description: Prints the array after each swap.
  */
 void selection_sort(int *array, size_t size)
 {
-	/**
-	 * look for the smallest element
-	 * swap the smallest element with the current
-	 */
-	unsigned int i = 0, j = 0, tmp_loc = 0;
-	int tmp;
+	int *min;
+	size_t i, j;
 
-	while (i < size)
+	if (array == NULL || size < 2)
+		return;
+
+	for (i = 0; i < size - 1; i++)
 	{
-		j = i;
-		tmp = array[j], tmp_loc = j;
-		while (j < size)
+		min = array + i;
+		for (j = i + 1; j < size; j++)
+			min = (array[j] < *min) ? (array + j) : min;
+
+		if ((array + i) != min)
 		{
-			if (array[j] < tmp)
-				tmp = array[j], tmp_loc = j;
-			j++;
-		}
-		if (array[i] != array[tmp_loc])
-		{
-			swap(array + i, array + tmp_loc);
+			swap_ints(array + i, min);
 			print_array(array, size);
 		}
-		i++;
 	}
 }
